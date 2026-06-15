@@ -51,6 +51,16 @@ P-website/
 
 ## 发布文章
 
+最简方式：直接对 AI 说：
+
+```
+发布文章 /Users/fatmmouse/RedNote/xiaohongshu-tuwen/<标题>/源文.md
+```
+
+AI 会自动推断 frontmatter、复制配图、build 验证，然后等你确认后 push 部署。
+
+如果想手动控制，完整流程是：
+
 1. 从 `../RedNote/xiaohongshu-tuwen/<标题>/源文.md` 复制正文
 2. 在 `site/src/content/posts/` 新建 `.md` 文件
 3. 添加 frontmatter：
@@ -67,6 +77,8 @@ P-website/
 4. 不改正文
 5. 跑 `npm --prefix site run build` 验证
 6. push 到 `main` 分支，GitHub Actions 会自动部署
+
+详细 frontmatter 说明见 `.claude/skills/publish-post/references/frontmatter-schema.md`。
 
 ## 部署
 

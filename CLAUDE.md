@@ -24,6 +24,7 @@ P-website/
 ├── README.md          # 项目概览、线上地址、快速开始
 ├── CLAUDE.md          # 本文件，规范变更先改这里再改实践
 ├── HANDOFF.md         # 当前进行中工作的交接快照，按需读取（标题选型流程、已知坑、文件地图）
+├── .claude/skills/    # 项目级 AI skills（发布文章等）
 ├── assets/            # 原始素材（角色原图等），不直接被网站引用
 │   └── character/     # 小人状态图，命名：状态名.png（如 idle.png / shocked.png / typing.png）
 ├── Reference/         # 私密参考资料，【永不】进入网站内容或公开仓库
