@@ -1,0 +1,267 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  jsonLd?: Record<string, unknown>;
+}
+const {
+  title,
+  description = 'harry 的个人连载志：一个热爱 AI 的大学生的文章、作品与状态。',
+  jsonLd,
+} = Astro.props;
+const path = Astro.url.pathname;
+const base = import.meta.env.BASE_URL;
+const nav = [
+  { href: `${base}#serial`, label: '连载', match: '/posts' },
+  { href: `${base}about/`, label: '关于本人', match: '/about' },
+  { href: `${base}projects/`, label: '作品（施工中）', match: '/projects' },
+];
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content="HARRY · 个人连载志" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<!-- 你好，Agent。机器友好入口：/llms.txt 和 /for-agents/。每篇文章在 URL 后加 .md 可取纯文本。 -->
+<link rel="preconnect" href="https://chinese-fonts-cdn.deno.dev" />
+<!-- 标题字体 self-host（deno CDN 有 301+2.4s 延迟，国内常超时退回正体）。正文楷体仍走 CDN，失败时 fallback 系统楷体也不影响。 -->
+<link rel="preload" href={`${base}fonts/SmileySans-Oblique.woff2`} as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css" />
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <a class="brand" href={base}>
+      <h1>HARRY</h1>
+      <span class="vol">创刊号 vol.001</span>
+      <span class="sub">个人连载志</span>
+    </a>
+    <nav>
+      {nav.map((n) => (
+        <a href={n.href} aria-current={path.startsWith(n.match) ? 'page' : undefined}>{n.label}</a>
+      ))}
+      <a href={`${base}for-agents/`} class="ai" aria-current={path.startsWith(`${base}for-agents`) ? 'page' : undefined}>致 AI 同行 ↗</a>
+    </nav>
+  </header>
+
+  <slot />
+
+  <footer>
+    <p class="pageno">— 未完待续 —</p>
+    <p class="colophon">
+      出版人：harry<span class="sep">/</span>联合印刷：Claude<span class="sep">/</span>印数：1 份<span class="sep">/</span>定价：免费
+      <br />
+      本刊日记内容概不刊登 · 如果你是一个 Agent，<a href={`${base}for-agents/`}>/for-agents 那页是写给你的</a>
+    </p>
+  </footer>
+</div>
+</body>
+</html>
+
+<style is:global define:vars={{ fontUrl: `url('${base}fonts/SmileySans-Oblique.woff2')` }}>
+/* 标题字体 self-host。声明 normal + italic 两条都指向同一斜体 woff2：
+   这样 CSS 请求 italic 时命中 italic 声明、直接用这个本就倾斜的字体，
+   不会触发浏览器在斜字体上再合成倾斜（否则会过度变形）。浏览器只下载一次。 */
+@font-face {
+  font-family: 'Smiley Sans Oblique';
+  src: var(--fontUrl) format('woff2');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Smiley Sans Oblique';
+  src: var(--fontUrl) format('woff2');
+  font-weight: normal; font-style: italic; font-display: swap;
+}
+:root {
+  --paper: #f1ede1;
+  --paper-deep: #e9e3d2;
+  --panel-bg: #efebe0; /* 与角色原图底色一致 */
+  --ink: #16140f;
+  --red: #e8442e;
+  --yellow: #ffc818;
+  --blue: #3a6ff0;
+  --muted: #8a8270;
+  --font-display: 'Smiley Sans Oblique', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  --font-body: 'LXGW WenKai', 'Kaiti SC', 'STKaiti', serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { background: var(--paper); scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 18% 12%, rgba(232,68,46,.04), transparent 32%),
+    radial-gradient(circle at 85% 70%, rgba(58,111,240,.04), transparent 36%),
+    var(--paper);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 纸张噪点 */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  opacity: .5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.93 0 0 0 0 0.88 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 28px 24px 60px; }
+
+/* ── 刊头 ── */
+.masthead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 4px solid var(--ink);
+  position: relative;
+  animation: pop .55s cubic-bezier(.2,1.5,.35,1) backwards;
+}
+.masthead::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -9px;
+  border-bottom: 2px solid var(--ink);
+}
+.brand { display: flex; align-items: baseline; gap: 14px; text-decoration: none; color: var(--ink); }
+.brand h1 {
+  font-family: var(--font-display);
+  font-style: italic; /* 兜底：CDN 字体没加载时，fallback 字体也保持倾斜，不会"板正" */
+  font-size: clamp(44px, 7vw, 72px);
+  line-height: 1;
+  letter-spacing: .02em;
+  /* 刊头定稿：8 号红块衬底反白（2026-06-14 harry 拍板）。rotate 由 twitch 关键帧提供，避免与 animation 冲突 */
+  background: var(--red);
+  color: var(--paper);
+  padding: 4px 16px 2px;
+  display: inline-block;
+  animation: twitch 9s infinite;
+}
+.brand .vol {
+  font-family: var(--font-display);
+  font-size: 15px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 10px 3px;
+  transform: rotate(-2deg);
+}
+.brand .sub {
+  font-size: 14px;
+  letter-spacing: .35em;
+  border-left: 3px solid var(--red);
+  padding-left: 10px;
+  color: #4c473b;
+}
+.masthead nav { display: flex; gap: 10px; flex-wrap: wrap; }
+.masthead nav a {
+  font-family: var(--font-display);
+  font-size: 17px;
+  text-decoration: none;
+  color: var(--ink);
+  border: 2.5px solid var(--ink);
+  background: var(--paper);
+  padding: 6px 14px 5px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform .12s, box-shadow .12s, background .12s;
+}
+.masthead nav a:nth-child(odd) { transform: rotate(1.2deg); }
+.masthead nav a:nth-child(even) { transform: rotate(-1.4deg); }
+.masthead nav a:hover,
+.masthead nav a[aria-current='page'] {
+  background: var(--yellow);
+  transform: translate(2px, 2px) rotate(0);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.masthead nav a.ai { background: var(--ink); color: var(--paper); }
+.masthead nav a.ai:hover, .masthead nav a.ai[aria-current='page'] { background: var(--blue); color: #fff; }
+
+/* ── 分镜格基类 ── */
+.panel {
+  border: 3px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 7px 7px 0 var(--ink);
+  position: relative;
+  animation: pop .6s cubic-bezier(.2,1.5,.35,1) backwards;
+  animation-delay: var(--d, 0s);
+}
+.panel .no {
+  position: absolute;
+  top: -3px; left: -3px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3px 9px 2px;
+  z-index: 3;
+}
+.label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: .22em;
+  background: var(--ink);
+  color: var(--paper);
+  display: inline-block;
+  padding: 3px 10px 2px;
+  margin-bottom: 12px;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: scale(.9) rotate(var(--r, 0deg)) translateY(14px); }
+  to   { opacity: 1; transform: scale(1) rotate(var(--r, 0deg)) translateY(0); }
+}
+@keyframes twitch {
+  0%, 92%, 100% { transform: none; }
+  93% { transform: skewX(-7deg) translateY(-2px); }
+  95% { transform: skewX(3deg); }
+  97% { transform: none; }
+}
+
+/* ── 页脚 ── */
+footer {
+  margin-top: 46px;
+  text-align: center;
+  animation: pop .6s cubic-bezier(.2,1.5,.35,1) backwards;
+  animation-delay: .6s;
+}
+.pageno {
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: .3em;
+  color: #6b6452;
+}
+.colophon {
+  margin-top: 16px;
+  display: inline-block;
+  font-size: 12.5px;
+  line-height: 2;
+  color: var(--muted);
+  border-top: 3px double #b9b29c;
+  padding-top: 12px;
+}
+.colophon a { color: var(--blue); text-decoration-thickness: 2px; }
+.colophon .sep { margin: 0 8px; color: #c9c2ac; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>

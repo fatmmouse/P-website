@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+on:
+  # 每次推送到 main 分支时自动构建并部署
+  push:
+    branches: [main, master]
+  # 允许在 Actions 页面手动触发
+  workflow_dispatch:
+
+# 允许 GITHUB_TOKEN 部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 防止多个部署同时运行
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install, build, and upload
+        uses: withastro/action@v3
+        with:
+          # 项目代码在 site/ 子目录
+          path: site
+          # 指定 Node 版本，与本地开发保持一致
+          node-version: 20
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

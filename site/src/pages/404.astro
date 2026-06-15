@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+---
+<Base title="404 · 这一格还没画" description="页面不存在。">
+  <main class="page">
+    <section class="panel lost">
+      <span class="no">404</span>
+      <div class="figure">
+        <img src={`${base}character/idle.webp`} alt="harry 的卡通形象，站在空白的分镜格里" width="800" height="800" />
+      </div>
+      <h1>这一格还没画。</h1>
+      <p>你翻到了连载志的空白页。<a href={base}>回第 1 页</a>，或者就在这陪他站一会儿。</p>
+    </section>
+  </main>
+</Base>
+
+<style>
+.page { margin-top: 34px; display: grid; place-items: center; }
+.lost {
+  --r: .6deg;
+  transform: rotate(var(--r));
+  padding: 40px 48px 36px;
+  text-align: center;
+  max-width: 480px;
+  background: var(--panel-bg);
+}
+.figure { width: 180px; margin: 0 auto 18px; animation: breathe 4.2s ease-in-out infinite; }
+@keyframes breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.figure img { width: 100%; height: auto; display: block; }
+.lost h1 { font-family: var(--font-display); font-size: 30px; margin-bottom: 10px; }
+.lost p { font-size: 15.5px; line-height: 2; }
+.lost a { color: var(--blue); text-decoration-thickness: 2px; }
+</style>

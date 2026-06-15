@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'harry',
+    description: '热爱 AI 的大学生，自媒体作者。用 AI 造东西，把重复三遍的事自动化。',
+    knowsAbout: ['AI', 'AI Agent', '自媒体写作', '攀岩', 'Popping'],
+  },
+};
+---
+<Base title="关于本人 · HARRY 个人连载志" description="harry 的人物档案：热爱 AI 的大学生、自媒体作者。" jsonLd={jsonLd}>
+  <main class="page">
+
+    <!-- 人物档案 -->
+    <section class="panel profile">
+      <span class="no">人物档案</span>
+      <div class="portrait">
+        <img src={`${base}character/idle.webp`} alt="harry 的卡通形象" width="800" height="800" />
+      </div>
+      <div class="sheet">
+        <h1>harry</h1>
+        <dl>
+          <dt>身份</dt><dd>大学生 · 自媒体作者 · <s>程序员</s>（不是，但天天和 AI 一起造东西）</dd>
+          <dt>痴迷</dt><dd>AI、Agent、把重复三遍的事自动化</dd>
+          <dt>出没</dt><dd>小红书（图文连载）、江边咖啡馆、攀岩馆、popping 教室</dd>
+          <dt>性格</dt><dd>表面冷漠，实际甲亢。安静的时候在写日记，不安静的时候在跟 AI 掰扯。</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 正在做 -->
+    <section class="panel doing">
+      <span class="no">正在做</span>
+      <span class="label">WORK IN PROGRESS</span>
+      <ul>
+        <li><b>小红书图文连载</b>——关于 AI、注意力和怎么活得清醒一点</li>
+        <li><b>这个网站</b>——你正看着的它，和 AI 联合施工中</li>
+        <li><b>可交互的小作品</b>——还在路上，做出来就挂到「作品」那页</li>
+      </ul>
+    </section>
+
+    <!-- 给 HR 的一格 -->
+    <section class="panel hr">
+      <span class="no">给 HR 的一格</span>
+      <p class="pitch">如果你在替某个团队看人：我擅长和 AI 协作把想法快速变成东西——这个网站从对齐需求到上线就是一个例子。</p>
+      <p class="resume">简历：<span class="todo">整理中，先看连载和这页</span></p>
+    </section>
+
+    <!-- 联系 -->
+    <section class="panel contact">
+      <span class="no">联系</span>
+      <span class="label">CONTACT</span>
+      <ul>
+        <li>小红书：硕鼠 <code>@harrysfugue</code></li>
+        <li>邮箱：<a href="mailto:fatmmouse@gmail.com">fatmmouse@gmail.com</a></li>
+      </ul>
+      <p class="memo">※ 他回消息的速度取决于当时在攀岩还是在写代码。</p>
+    </section>
+
+  </main>
+</Base>
+
+<style>
+.page {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 22px;
+  margin-top: 34px;
+}
+
+.profile {
+  grid-column: 1 / 13;
+  --r: -.3deg;
+  transform: rotate(var(--r));
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  background: var(--panel-bg);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.portrait {
+  width: 220px;
+  flex-shrink: 0;
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  background: var(--panel-bg);
+  transform: rotate(1deg);
+}
+.portrait img { width: 100%; height: auto; display: block; }
+.sheet { flex: 1; min-width: 260px; }
+.sheet h1 {
+  font-family: var(--font-display);
+  font-style: italic; /* 同刊头：字体没加载也保持倾斜 */
+  font-size: clamp(34px, 5vw, 52px);
+  margin-bottom: 14px;
+  text-transform: capitalize;
+  color: var(--ink);
+  -webkit-text-stroke: 0;
+  background: none;
+  padding: 0;
+  text-shadow: 3.3px 0 0 #e8442e;
+}
+.sheet dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; font-size: 16px; line-height: 1.8; }
+.sheet dt {
+  font-family: var(--font-display);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2px 10px 1px;
+  height: fit-content;
+  transform: rotate(-1deg);
+}
+.sheet dd s { color: var(--muted); }
+
+.doing {
+  grid-column: 1 / 8;
+  --r: .5deg;
+  transform: rotate(var(--r));
+  --d: .15s;
+  padding: 22px 26px;
+}
+.doing ul { list-style: none; font-size: 16px; line-height: 2.1; }
+.doing li::before { content: '▸'; color: var(--red); margin-right: 10px; }
+.doing b { font-family: var(--font-display); font-weight: normal; }
+
+.hr {
+  grid-column: 8 / 13;
+  --r: -.8deg;
+  transform: rotate(var(--r));
+  --d: .25s;
+  padding: 22px 24px;
+  background: var(--yellow);
+}
+.hr .pitch { font-size: 15.5px; line-height: 1.95; font-weight: bold; }
+.hr .resume { margin-top: 12px; font-size: 14px; }
+
+.contact {
+  grid-column: 1 / 13;
+  --r: .3deg;
+  transform: rotate(var(--r));
+  --d: .35s;
+  padding: 22px 26px;
+}
+.contact ul { list-style: none; font-size: 16px; line-height: 2.1; }
+.contact .memo { margin-top: 10px; font-size: 12.5px; color: var(--muted); border-top: 2px dashed #c9c2ac; padding-top: 8px; }
+
+.todo {
+  background: linear-gradient(transparent 60%, rgba(232,68,46,.25) 60% 92%, transparent 92%);
+  color: #4c473b;
+}
+
+@media (max-width: 880px) {
+  .profile, .doing, .hr, .contact { grid-column: 1 / 13; }
+}
+</style>

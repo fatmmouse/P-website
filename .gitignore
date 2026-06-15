@@ -1,0 +1,6 @@
+Reference/MyJournal/
+.DS_Store
+node_modules/
+site/dist/
+site/.astro/
+.claude/

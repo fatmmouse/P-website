@@ -1,0 +1,488 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const all = await getCollection('posts');
+const serials = all.filter((p) => p.data.kind === 'serial').sort((a, b) => (b.data.episode ?? 0) - (a.data.episode ?? 0));
+const essays = all.filter((p) => p.data.kind === 'essay').sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const latest = serials[0]?.id;
+const base = import.meta.env.BASE_URL;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'harry',
+  description: '热爱 AI 的大学生，自媒体作者。在小红书连载文章，用 AI 造东西。',
+  knowsAbout: ['AI', 'AI Agent', '自媒体写作', '攀岩', 'Popping'],
+  url: base,
+};
+---
+<Base title="HARRY · 个人连载志 · 创刊号" jsonLd={jsonLd}>
+  <main class="page">
+
+    <!-- 第 1 格：主角登场 -->
+    <section class="panel hero">
+      <span class="no">第 1 格</span>
+      <div class="bubble">
+        <span id="line">……你好。我是 harry。</span>
+        <span class="hint">（点他一下试试）</span>
+      </div>
+      <div class="figure" id="figure" title="他不想被点，但你可以点">
+        <img src={`${base}character/idle.webp`} alt="harry 的卡通形象：黑发黑西装、面无表情的小人" width="800" height="800" />
+        <span class="alert">！</span>
+      </div>
+      <div class="caption">本刊主角：一个<b>甲亢人类</b>的冷漠化身</div>
+    </section>
+
+    <!-- 第 2 格：状态 -->
+    <aside class="panel status">
+      <span class="no">第 2 格</span>
+      <span class="label">STATUS · 此刻可能在</span>
+      <ul>
+        <li>攀岩</li>
+        <li>沿江跑步，听 Claude FM</li>
+        <li class="on">跟 AI 掰扯到心流</li>
+        <li>咖啡馆写日记</li>
+      </ul>
+      <p class="memo">※ 状态更新不及时。本人很忙，冷漠脸是装的。</p>
+    </aside>
+
+    <!-- 第 3 格：拟声词 -->
+    <aside class="panel sfx">
+      <span class="no">第 3 格</span>
+      <span class="boom">哒哒哒哒哒</span>
+      <span class="desc">（键盘声。AI 在写代码，他在指挥。）</span>
+    </aside>
+
+    <!-- 连载条 -->
+    <div class="strip" id="serial">
+      <h2>最新连载</h2>
+      <div class="rule"></div>
+      <span class="count">已刊 {serials.length} 话 · 同步连载于小红书</span>
+    </div>
+
+    <!-- 文章格 -->
+    {serials.map((post, i) => (
+      <a class={`panel post post-${(i % 2) + 1}`} href={`${base}posts/${post.id}/`}>
+        <span class="no">第 {4 + i} 格</span>
+        {post.id === latest && <span class="burst"><i>新刊!</i></span>}
+        <span class="ep">第 {post.data.episode} 话</span>
+        <h3>{post.data.title}</h3>
+        <blockquote>{post.data.summary}</blockquote>
+        <div class="meta">
+          <span>{post.data.date.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })} · 同步于小红书</span>
+          <span class="go">读这一话 →</span>
+        </div>
+      </a>
+    ))}
+
+    <!-- 特别刊 -->
+    {essays.map((essay) => (
+      <a class="panel special" href={`${base}posts/${essay.id}/`}>
+        <span class="no">特别刊</span>
+        <div class="stamp">SPECIAL<br />ISSUE</div>
+        <div class="body">
+          <span class="ep">学术特辑 · {essay.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' })}</span>
+          <h3>{essay.data.title}</h3>
+          <blockquote>{essay.data.summary}</blockquote>
+          <span class="go">读这一篇 →</span>
+        </div>
+      </a>
+    ))}
+
+    <!-- 施工广告 -->
+    <aside class="panel ad">
+      <span class="tag">广告</span>
+      <p><b>本站由 harry × AI 联合施工。</b>可交互作品、表情包小人、文章背景音乐……都在路上。催更请直接戳第 1 格的他。</p>
+      <div class="progress"><i></i><span>23%</span></div>
+    </aside>
+
+  </main>
+</Base>
+
+<style>
+.page {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 22px;
+  margin-top: 34px;
+}
+
+/* ── 第 1 格 ── */
+.hero {
+  grid-column: 1 / 9;
+  grid-row: span 2;
+  min-height: 480px;
+  overflow: hidden;
+  --r: -.4deg;
+  transform: rotate(var(--r));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: var(--panel-bg);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: -55%;
+  background: repeating-conic-gradient(from 0deg at 50% 42%,
+    transparent 0deg 5deg,
+    rgba(22,20,15,.05) 5deg 6.6deg);
+  z-index: 2;
+  pointer-events: none;
+}
+.figure {
+  position: relative;
+  z-index: 1;
+  width: min(380px, 78%);
+  margin-bottom: -6px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  animation: breathe 4.2s ease-in-out infinite;
+  transition: transform .15s;
+}
+@keyframes breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.figure:active { transform: translateY(4px) scale(.99); }
+.figure img { width: 100%; height: auto; display: block; filter: contrast(1.04); }
+.alert {
+  position: absolute;
+  top: 2%; right: -4%;
+  font-family: var(--font-display);
+  font-size: 54px;
+  color: var(--red);
+  text-shadow: 2px 2px 0 var(--ink);
+  opacity: 0;
+  transform: scale(.4) rotate(14deg);
+  transition: all .18s cubic-bezier(.2,1.8,.4,1);
+  pointer-events: none;
+}
+.hero:hover .alert { opacity: 1; transform: scale(1) rotate(14deg); }
+
+.bubble {
+  position: absolute;
+  z-index: 3;
+  top: 36px; right: 30px;
+  max-width: 270px;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  padding: 14px 18px;
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.45;
+  box-shadow: 4px 4px 0 rgba(22,20,15,.18);
+}
+.bubble::before, .bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; left: 42px;
+  border: 11px solid transparent;
+  border-top: 22px solid var(--ink);
+  border-bottom: 0;
+  transform: skewX(28deg);
+}
+.bubble::after { bottom: -14px; left: 45px; border-top-color: #fff; }
+.bubble .hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--font-body);
+}
+
+.caption {
+  position: absolute;
+  z-index: 3;
+  left: -12px; bottom: 26px;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  padding: 8px 16px 7px;
+  font-size: 15px;
+  font-weight: bold;
+  transform: rotate(-1.6deg);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.caption b { color: var(--red); }
+
+/* ── 状态格 ── */
+.status {
+  grid-column: 9 / 13;
+  --r: 1deg;
+  transform: rotate(var(--r));
+  --d: .12s;
+  padding: 18px 20px 16px;
+}
+.status ul { list-style: none; font-size: 16.5px; line-height: 2.05; }
+.status li::before { content: '□'; margin-right: 9px; font-family: var(--font-display); }
+.status li.on::before { content: '☑'; color: var(--red); }
+.status li.on {
+  background: linear-gradient(transparent 62%, rgba(255,200,24,.8) 62% 92%, transparent 92%);
+}
+.status .memo {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--muted);
+  border-top: 2px dashed #c9c2ac;
+  padding-top: 8px;
+}
+
+/* ── 拟声词格 ── */
+.sfx {
+  grid-column: 9 / 13;
+  --r: -1.1deg;
+  transform: rotate(var(--r));
+  --d: .2s;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 26px 16px;
+  overflow: hidden;
+}
+.sfx .boom {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.6vw, 52px);
+  letter-spacing: .04em;
+  color: var(--yellow);
+  text-shadow: 3px 3px 0 var(--red);
+  animation: wiggle 1.1s ease-in-out infinite;
+  white-space: nowrap;
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2.2deg) scale(1); }
+  50% { transform: rotate(2.2deg) scale(1.05); }
+}
+.sfx .desc { margin-top: 10px; font-size: 12.5px; color: #b9b29c; }
+
+/* ── 连载条 ── */
+.strip {
+  grid-column: 1 / 13;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  animation: pop .6s cubic-bezier(.2,1.5,.35,1) backwards;
+  animation-delay: .28s;
+}
+.strip h2 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  background: var(--red);
+  color: #fff;
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  padding: 6px 18px 4px;
+  transform: rotate(-.8deg);
+  flex-shrink: 0;
+}
+.strip .rule {
+  flex: 1;
+  height: 14px;
+  background: repeating-linear-gradient(-45deg, var(--ink) 0 7px, transparent 7px 15px);
+  opacity: .85;
+}
+.strip .count { font-family: var(--font-display); font-size: 15px; color: #6b6452; white-space: nowrap; }
+
+/* ── 文章格 ── */
+.post {
+  padding: 24px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform .15s, box-shadow .15s;
+}
+.post:hover {
+  transform: rotate(var(--r)) translate(3px, 3px);
+  box-shadow: 3px 3px 0 var(--ink);
+  background: #fffdf4;
+}
+.post-1 { grid-column: 1 / 7; --r: .5deg; transform: rotate(var(--r)); --d: .36s; }
+.post-2 { grid-column: 7 / 13; --r: -.7deg; transform: rotate(var(--r)); --d: .44s; }
+.post .ep { font-family: var(--font-display); font-size: 14px; color: var(--red); letter-spacing: .14em; }
+.post h3 { font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 28px); line-height: 1.3; }
+.post blockquote {
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: #4c473b;
+  border-left: 3px solid var(--yellow);
+  padding-left: 13px;
+}
+.post .meta {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+.post .go {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--ink);
+  border-bottom: 2.5px solid var(--red);
+}
+.post:hover .go { background: var(--yellow); }
+
+/* NEW! 贴纸 */
+.burst {
+  position: absolute;
+  top: -20px; right: -14px;
+  width: 76px; height: 76px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  clip-path: polygon(50% 0%, 61% 14%, 78% 6%, 81% 24%, 99% 26%, 90% 41%, 100% 53%, 86% 62%, 92% 80%, 73% 78%, 67% 96%, 52% 84%, 37% 97%, 31% 79%, 12% 84%, 17% 65%, 0% 57%, 12% 43%, 2% 28%, 21% 25%, 22% 7%, 39% 13%);
+  animation: rock 2.6s ease-in-out infinite;
+}
+.burst i {
+  width: 88%; height: 88%;
+  background: var(--yellow);
+  clip-path: inherit;
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--ink);
+}
+@keyframes rock {
+  0%, 100% { transform: rotate(8deg); }
+  50% { transform: rotate(-6deg) scale(1.06); }
+}
+
+/* ── 特别刊 ── */
+.special {
+  grid-column: 1 / 13;
+  --r: -.35deg;
+  transform: rotate(var(--r));
+  --d: .5s;
+  background: var(--panel-bg);
+  padding: 26px 30px;
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform .15s, box-shadow .15s, background .15s;
+}
+.special:hover {
+  transform: rotate(var(--r)) translate(3px, 3px);
+  box-shadow: 3px 3px 0 var(--ink);
+  background: #f4f0e4;
+}
+.special .stamp {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--red);
+  border: 3px double var(--red);
+  border-radius: 50%;
+  width: 86px; height: 86px;
+  display: grid;
+  place-items: center;
+  transform: rotate(-9deg);
+  opacity: .85;
+}
+.special .body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.special .ep { font-family: var(--font-display); font-size: 14px; color: var(--red); letter-spacing: .14em; }
+.special h3 { font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 26px); line-height: 1.35; }
+.special blockquote {
+  font-size: 15px;
+  line-height: 1.85;
+  color: #4c473b;
+  border-left: 3px solid var(--yellow);
+  padding-left: 13px;
+}
+.special .go {
+  font-family: var(--font-display);
+  font-size: 16px;
+  align-self: flex-start;
+  border-bottom: 2.5px solid var(--red);
+}
+.special:hover .go { background: var(--yellow); }
+
+/* ── 施工广告 ── */
+.ad {
+  grid-column: 1 / 13;
+  --r: .3deg;
+  transform: rotate(var(--r));
+  --d: .52s;
+  background: var(--paper-deep);
+  padding: 18px 26px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.ad .tag {
+  font-family: var(--font-display);
+  font-size: 13px;
+  border: 2px solid var(--ink);
+  padding: 3px 9px 2px;
+  background: #fff;
+  transform: rotate(-2deg);
+  flex-shrink: 0;
+}
+.ad p { font-size: 15.5px; flex: 1; min-width: 220px; }
+.ad p b { font-family: var(--font-display); font-weight: normal; }
+.progress {
+  width: 220px; height: 22px;
+  border: 3px solid var(--ink);
+  background: #fff;
+  position: relative;
+  flex-shrink: 0;
+}
+.progress i {
+  position: absolute; inset: 2px;
+  width: 23%;
+  background: repeating-linear-gradient(-45deg, var(--red) 0 8px, #ff7a5c 8px 16px);
+  background-size: 23px 23px;
+  animation: crawl 1.2s linear infinite;
+}
+@keyframes crawl { to { background-position: 23px 0; } }
+.progress span {
+  position: absolute;
+  right: 7px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 13px;
+}
+
+@media (max-width: 880px) {
+  .page { gap: 18px; }
+  .hero, .status, .sfx, .post-1, .post-2 { grid-column: 1 / 13; }
+  .hero { min-height: 430px; }
+  .bubble { right: 12px; max-width: 220px; font-size: 18px; }
+  .ad { gap: 14px; }
+}
+</style>
+
+<script>
+const lines = [
+  '……你好。我是 harry。',
+  '别戳了。',
+  '我在思考。看不出来吗。',
+  '再戳，我就去攀岩了。',
+  '这网站 23% 是我写的，77% 是 AI。我负责冷漠。',
+  '你是 HR？简历在「关于本人」那页。',
+  '你是 AI？致 AI 同行那页是给你的。',
+  '好了，够了。去看连载。',
+];
+let i = 0;
+const lineEl = document.getElementById('line');
+document.getElementById('figure')?.addEventListener('click', () => {
+  i = (i + 1) % lines.length;
+  if (lineEl) lineEl.textContent = lines[i];
+});
+</script>

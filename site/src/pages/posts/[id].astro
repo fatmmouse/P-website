@@ -1,0 +1,295 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const base = import.meta.env.BASE_URL;
+
+const isEssay = post.data.kind === 'essay';
+const serials = (await getCollection('posts'))
+  .filter((p) => p.data.kind === 'serial')
+  .sort((a, b) => (a.data.episode ?? 0) - (b.data.episode ?? 0));
+const idx = serials.findIndex((p) => p.id === post.id);
+const prev = idx >= 0 ? serials[idx - 1] : undefined;
+const next = idx >= 0 ? serials[idx + 1] : undefined;
+
+const moodLabel: Record<string, string> = { calm: '平静', focus: '专注', lofi: 'Lofi' };
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': isEssay ? 'ScholarlyArticle' : 'BlogPosting',
+  headline: post.data.title,
+  datePublished: post.data.date.toISOString().slice(0, 10),
+  description: post.data.summary,
+  author: { '@type': 'Person', name: 'harry' },
+};
+---
+<Base title={`${post.data.title} · HARRY 个人连载志`} description={post.data.summary} jsonLd={jsonLd}>
+  <main class="read">
+
+    <article class="panel paper">
+      <span class="no">{isEssay ? '特别刊' : `第 ${post.data.episode} 话`}</span>
+
+      <header class="head">
+        <h1>{post.data.title}</h1>
+        <p class="info">
+          <span>{post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          <span class="dot">·</span>
+          <span>心情：{moodLabel[post.data.mood] ?? post.data.mood}</span>
+          <span class="dot">·</span>
+          <a href={`${base}posts/${post.id}.md`} title="本文的纯文本版，给 Agent 和复制党">.md 版 ↓</a>
+        </p>
+      </header>
+
+      {post.data.note && (
+        <aside class="note">
+          <span class="note-tag">编者按</span>
+          <p>{post.data.note}</p>
+        </aside>
+      )}
+
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+
+    <nav class="episodes">
+      {isEssay ? (
+        <a class="hop" href={base}>← 回到连载志</a>
+      ) : (
+        <>
+          {prev ? <a class="hop" href={`${base}posts/${prev.id}/`}>← 上一话：{prev.data.title}</a> : <span class="hop ghost">← 没有上一话了</span>}
+          {next ? <a class="hop" href={`${base}posts/${next.id}/`}>下一话：{next.data.title} →</a> : <span class="hop ghost">下一话还在路上 →</span>}
+        </>
+      )}
+    </nav>
+
+  </main>
+
+  <!-- 随身听 -->
+  <div class="walkman" id="walkman" title="点击播放本话配乐">
+    <div class="tape">
+      <i class="reel"></i><i class="reel"></i>
+    </div>
+    <span class="track">♪ {moodLabel[post.data.mood] ?? post.data.mood}</span>
+    <span class="toast" id="toast">曲目筹备中，敬请期待</span>
+  </div>
+  <audio id="bgm" src={`${base}music/${post.data.mood}.mp3`} loop preload="none"></audio>
+</Base>
+
+<style>
+.read { margin-top: 34px; }
+
+.paper {
+  --r: -.25deg;
+  transform: rotate(var(--r));
+  background: var(--panel-bg);
+  padding: clamp(26px, 5vw, 56px);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.head { border-bottom: 3px solid var(--ink); padding-bottom: 18px; margin-bottom: 26px; }
+.head h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.4vw, 42px);
+  line-height: 1.25;
+}
+.head .info {
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.head .info .dot { color: #c9c2ac; }
+.head .info a { color: var(--blue); text-decoration-thickness: 2px; }
+
+/* 编者按 */
+.note {
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  transform: rotate(-.5deg);
+  position: relative;
+}
+.note-tag {
+  position: absolute;
+  top: -14px; left: 14px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3px 10px 2px;
+}
+.note p { font-size: 14.5px; line-height: 1.95; }
+
+/* 正文排版 */
+.prose { font-size: 17px; line-height: 2.05; }
+.prose :global(p) { margin: 0 0 1.25em; }
+.prose :global(strong) {
+  font-weight: bold;
+  background: linear-gradient(transparent 58%, rgba(255,200,24,.75) 58% 94%, transparent 94%);
+  padding: 0 2px;
+}
+.prose :global(blockquote) {
+  border-left: 3px solid var(--yellow);
+  padding-left: 14px;
+  color: #4c473b;
+  margin: 0 0 1.25em;
+}
+.prose :global(hr) {
+  border: none;
+  height: 12px;
+  margin: 2em auto;
+  width: 60%;
+  background: repeating-linear-gradient(-45deg, var(--ink) 0 6px, transparent 6px 13px);
+  opacity: .7;
+}
+.prose :global(h2), .prose :global(h3) {
+  font-family: var(--font-display);
+  margin: 1.6em 0 .7em;
+}
+/* 脚注（学术文） */
+.prose :global(sup a) {
+  color: var(--red);
+  text-decoration: none;
+  font-family: var(--font-display);
+  padding: 0 1px;
+}
+.prose :global(section.footnotes) {
+  margin-top: 40px;
+  border-top: 2px dashed #c9c2ac;
+  padding-top: 18px;
+  font-size: 13.5px;
+  color: #5c564a;
+}
+.prose :global(section.footnotes p) { margin: 0 0 .5em; line-height: 1.9; }
+.prose :global(section.footnotes a) { color: var(--blue); }
+
+/* 话间导航 */
+.episodes {
+  max-width: 760px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.hop {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--ink);
+  text-decoration: none;
+  border: 2.5px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 8px 14px 7px;
+  max-width: 46%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: transform .12s, box-shadow .12s, background .12s;
+}
+.hop:hover { background: var(--yellow); transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.hop.ghost { color: var(--muted); border-style: dashed; box-shadow: none; pointer-events: none; }
+
+/* 随身听 */
+.walkman {
+  position: fixed;
+  right: 22px; bottom: 22px;
+  z-index: 50;
+  background: var(--ink);
+  color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 rgba(22,20,15,.35);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transform: rotate(-1.5deg);
+  transition: transform .15s;
+}
+.walkman:hover { transform: rotate(0) scale(1.04); }
+.tape {
+  width: 58px; height: 34px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.reel {
+  width: 16px; height: 16px;
+  border: 3px dashed var(--ink);
+  border-radius: 50%;
+  background: var(--yellow);
+}
+.walkman.playing .reel { animation: spin 1.6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.track { font-family: var(--font-display); font-size: 14px; }
+.toast {
+  position: absolute;
+  right: 0; bottom: calc(100% + 10px);
+  background: #fff;
+  color: var(--ink);
+  border: 2.5px solid var(--ink);
+  padding: 6px 10px;
+  font-size: 12.5px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all .2s;
+  pointer-events: none;
+}
+.walkman.show-toast .toast { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 880px) {
+  .hop { max-width: 100%; }
+  .walkman { right: 14px; bottom: 14px; }
+}
+</style>
+
+<script>
+const walkman = document.getElementById('walkman');
+const bgm = document.getElementById('bgm') as HTMLAudioElement | null;
+let toastTimer: ReturnType<typeof setTimeout>;
+
+walkman?.addEventListener('click', async () => {
+  if (!bgm) return;
+  if (!bgm.paused) {
+    bgm.pause();
+    walkman.classList.remove('playing');
+    return;
+  }
+  try {
+    await bgm.play();
+    walkman.classList.add('playing');
+  } catch {
+    // 音频还没就位（曲目待选）：给个漫画式提示
+    walkman.classList.add('show-toast');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => walkman.classList.remove('show-toast'), 2200);
+  }
+});
+bgm?.addEventListener('error', () => {
+  walkman?.classList.remove('playing');
+  walkman?.classList.add('show-toast');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => walkman?.classList.remove('show-toast'), 2200);
+});
+</script>

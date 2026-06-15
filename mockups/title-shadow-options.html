@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HARRY 刊头描边 · 选型 v2</title>
+<link rel="preconnect" href="https://chinese-fonts-cdn.deno.dev">
+<link rel="stylesheet" href="https://chinese-fonts-cdn.deno.dev/packages/dyh/dist/SmileySans-Oblique/result.css">
+<style>
+:root {
+  --paper: #f1ede1;
+  --ink: #16140f;
+  --red: #e8442e;
+  --yellow: #ffc818;
+  --font-display: 'Smiley Sans Oblique', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-style: italic;
+  padding: 36px 24px 90px;
+  position: relative;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: .5; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.93 0 0 0 0 0.88 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.head { max-width: 920px; margin: 0 auto 24px; }
+.head h2 { font-size: 30px; margin-bottom: 12px; }
+.tip {
+  font-size: 15.5px; font-style: normal; line-height: 1.8;
+  font-family: 'PingFang SC', sans-serif;
+  background: var(--yellow); border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
+  padding: 14px 18px; transform: rotate(-.3deg);
+}
+.tip b { font-style: normal; }
+.group-label {
+  max-width: 920px; margin: 38px auto 8px;
+  font-size: 22px;
+  border-bottom: 3px solid var(--ink); padding-bottom: 6px;
+}
+.group-label span { font-style: normal; font-family: 'PingFang SC'; font-size: 13px; color: #6b6452; margin-left: 10px; }
+
+.row {
+  max-width: 920px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 24px 22px; border-bottom: 2px dashed #c9c2ac; transition: background .15s;
+}
+.row:hover { background: rgba(255,255,255,.4); }
+.demo { display: flex; align-items: baseline; gap: 14px; min-width: 0; }
+.demo h1 { font-size: 60px; line-height: .9; letter-spacing: .02em; font-style: italic; }
+.demo .vol {
+  font-size: 13px; font-style: italic; background: var(--ink); color: var(--paper);
+  padding: 4px 10px 3px; transform: rotate(-2deg); white-space: nowrap; align-self: center;
+}
+.meta { text-align: right; flex-shrink: 0; width: 250px; }
+.meta .num {
+  display: inline-block; font-size: 20px; font-style: normal; background: var(--ink); color: var(--paper);
+  width: 38px; height: 38px; line-height: 38px; text-align: center; border-radius: 50%; margin-bottom: 6px;
+}
+.meta .num.pick { background: var(--red); box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--red); }
+.meta .desc { font-size: 13.5px; font-style: normal; font-family: 'PingFang SC', sans-serif; color: #4c473b; line-height: 1.6; }
+.meta .desc em { font-style: normal; color: var(--red); font-weight: bold; }
+
+/* ════ 投影组：把透明度提上去 / 用实色，红就实了 ════ */
+.s0 .demo h1 { text-shadow: 4px 4px 0 rgba(232,68,46,.40); }              /* 现状基准 */
+.s1 .demo h1 { text-shadow: 4px 4px 0 rgba(232,68,46,.78); }             /* 同色提透明度 */
+.s2 .demo h1 { text-shadow: 4px 4px 0 #e8442e; }                         /* 实色满饱和 */
+.s3 .demo h1 { text-shadow: 4px 4px 0 #ee2d18; }                         /* 更红更纯 */
+.s4 .demo h1 { text-shadow: 3px 3px 0 #f5f1e5, 6px 6px 0 #e8442e; }      /* 错版双投影 白+红 */
+
+/* ════ 非投影组：跳出投影 ════ */
+/* 5 红色空心描边 */
+.s5 .demo h1 { color: transparent; -webkit-text-stroke: 2.5px #e8442e; text-stroke: 2.5px #e8442e; }
+/* 6 黑字 + 红色四向描边 */
+.s6 .demo h1 { color: var(--ink); text-shadow: -2.5px -2.5px 0 #e8442e, 2.5px -2.5px 0 #e8442e, -2.5px 2.5px 0 #e8442e, 2.5px 2.5px 0 #e8442e; }
+/* 7 水平套色串印（活字印刷左右串色） */
+.s7 .demo h1 { text-shadow: 6px 0 0 #e8442e; }
+/* 8 红块衬底反白 */
+.s8 .demo h1 { background: #e8442e; color: var(--paper); padding: 2px 14px; transform: rotate(-1.5deg); display: inline-block; }
+</style>
+</head>
+<body>
+
+<div class="head">
+  <h2>HARRY 刊头 · 描边选型 v2</h2>
+  <div class="tip">
+    <b>所有 HARRY 都已强制斜体</b>（CDN 字体没加载也斜，"板正"已修）。下面分两组：<br>
+    <b>投影组</b>——你之前嫌"淡"的根因是透明度太低（红透过去了）。这组把透明度提上来 / 用实色，红就"实"了。<br>
+    <b>非投影组</b>——跳出投影，试空心描边、套色串印、色块衬底等别的路子。<br>
+    <b>看完报编号即可</b>（如 "3" 或 "7但偏移小一点 / 颜色再深一点"），我全站替换并微调。
+  </div>
+</div>
+
+<div class="group-label">投影组 <span>红色实不实，看透明度</span></div>
+
+<div class="row s0">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">0</span><p class="desc"><em>现状（你嫌淡的）</em>·红 40% 透明，透太多发粉</p></div>
+</div>
+<div class="row s1">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">1</span><p class="desc">同色升到 78% 透明 · <em>现状与实色之间</em>，很可能就是你说的"中间饱和度"</p></div>
+</div>
+<div class="row s2">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">2</span><p class="desc">实色满饱和 · 同一个红，0 透明，最实最跳</p></div>
+</div>
+<div class="row s3">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">3</span><p class="desc">实色 + 色相更红更纯 · 比现状红往正红走一点</p></div>
+</div>
+<div class="row s4">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">4</span><p class="desc">错版双投影 · 白描边 + 红投影，套印没对齐的漫画感</p></div>
+</div>
+
+<div class="group-label">非投影组 <span>换个思路</span></div>
+
+<div class="row s5">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">5</span><p class="desc">红色空心描边 · 字芯透出纸色，最轻最透气</p></div>
+</div>
+<div class="row s6">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">6</span><p class="desc">黑字 + 红色一圈描边 · 字更立体，红包住黑</p></div>
+</div>
+<div class="row s7">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">7</span><p class="desc">水平套色串印 · 红色副本只往右串，像印刷串色 / 故障感</p></div>
+</div>
+<div class="row s8">
+  <div class="demo"><h1>HARRY</h1><span class="vol">创刊号 vol.001</span></div>
+  <div class="meta"><span class="num">8</span><p class="desc">红块衬底反白 · 白字压在歪斜实红块上，最强反差</p></div>
+</div>
+
+</body>
+</html>
