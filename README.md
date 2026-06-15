@@ -8,7 +8,7 @@ harry 的个人网站——「网页版人格」。
 
 ## 当前状态
 
-- 8 个页面已上线：首页 / 文章×4 / about / for-agents / projects / 404
+- 9 个页面已上线：首页 / 文章×4 / about / for-agents / projects / 404
 - 人物档案标题定稿：`Harry` + 7 号水平串印 + 3.3px 平移
 - 刊头 HARRY 定稿：8 号红块衬底反白，垂直居中 `padding: 4px 16px 2px`
 - 底部测评台已删除，样式已固化进代码
@@ -36,8 +36,10 @@ npm --prefix site run build
 
 ```
 P-website/
+├── README.md          # 本文件（项目概览、线上地址、快速开始）
 ├── CLAUDE.md          # 项目规范与决策（AI 必读）
 ├── HANDOFF.md         # 当前工作交接快照
+├── Reference/         # 私密参考资料（日记等），永不进入公开仓库
 ├── assets/            # 原始素材（角色原图等）
 ├── mockups/           # 风格小样 HTML
 └── site/              # Astro 工程
