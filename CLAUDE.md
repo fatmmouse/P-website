@@ -11,7 +11,7 @@
 | 决策点 | 结论 |
 |---|---|
 | 技术栈 | Astro（内容驱动、纯静态、以后可嵌交互组件） |
-| 受众/部署 | 国内外都要顺畅：买自有域名 + Cloudflare Pages 或腾讯 EdgeOne，待定 |
+| 受众/部署 | 已部署到 GitHub Pages（默认域名），国内外访问后续迁移到自有域名 + Cloudflare Pages / 腾讯 EdgeOne |
 | 小人动画 | 表情状态机：AI 生图产出 6~10 个状态图，场景切换 + CSS 微动效（呼吸浮动等），不做补间，「啪」地切换保留漫画感 |
 | 视觉风格 | 漫画分镜风：歪斜不一的分镜格、速度线、拟声词、对话气泡；先做小样定稿再搭整站 |
 | Agent 可读 | llms.txt + 每页 .md 纯文本版 + JSON-LD（Person/Article）+ /for-agents 彩蛋页 |
@@ -38,15 +38,24 @@ P-website/
 
 ## 常用命令
 
-- 开发预览：`npm --prefix site run dev`（端口 4321）
+- 开发预览：`npm --prefix site run dev`（端口 4321，路径带 `/P-website/`）
 - 构建验证：`npm --prefix site run build`（交付前必跑）
+- 线上地址：https://fatmmouse.github.io/P-website/
 
 ## 当前待办
 
 - [ ] 表情状态图：harry 按 `assets/character/PROMPTS.md` 生图 → 抠图压缩进 public/character/ → 接进首页状态机（抠图脚本思路：floodfill 边缘背景 + 形态学开运算去噪，见 2026-06-13 会话）
 - [ ] 背景音乐：选免版权曲目放 public/music/<mood>.mp3（calm / focus），随身听已就位
-- [ ] 域名 + 部署（Cloudflare Pages / EdgeOne），定了之后更新 astro.config.mjs 的 site 字段
+- [ ] 域名：购买后更新 `site/astro.config.mjs` 的 `site` 字段并重新配置 Pages 自定义域名
 - [ ] harry 磁盘只剩 ~1.3GB，已挂存储分析任务
+
+## 部署
+
+- **平台**：GitHub Pages
+- **工作流**：`.github/workflows/deploy.yml`（`withastro/action@v3`，main 分支 push 时自动部署）
+- **当前线上地址**：https://fatmmouse.github.io/P-website/
+- **base 路径**：`/P-website/`（仓库名）。所有绝对路径（字体、图片、导航、llms.txt、.md 端点）已改为 `\${import.meta.env.BASE_URL}` 拼接，避免子路径部署 404。
+- 后续若迁移到自定义域名根路径，需把 `base` 改回 `/` 并重新检查全站路径。
 
 ## 已定的产品决策（除非 harry 反悔，不要恢复）
 
@@ -73,5 +82,5 @@ P-website/
 
 ## 验证习惯
 
-- 改完跑 `npm run build`（Astro 工程建好之后），本地预览确认再交付。
-- 部署命令：待部署方案落地后补充到这里。
+- 改完跑 `npm --prefix site run build`（Astro 工程建好之后），本地预览确认再交付。
+- 部署由 GitHub Actions 自动完成；push 到 main 后可在仓库 Actions 页查看进度。
