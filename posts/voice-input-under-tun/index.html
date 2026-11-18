@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>开着 Clash Verge TUN 模式，豆包语音输入法和 Typeless 总是卡？我让 Codex 把它修好了 · harry&#39;s fugue</title><meta name="description" content="一敲完快捷键，立马说话立马就有回音。有些问题，你本可以用 AI 去解决；你本可以去探究这些为什么。"><link rel="canonical" href="https://harrysfugue.com/posts/voice-input-under-tun/"><meta name="theme-color" content="#f2eee3"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" href="/rss.xml" title="harry 的博客"><link rel="alternate" type="text/plain" href="/llms.txt" title="给 AI 读的版本"><meta property="og:type" content="article"><meta property="og:title" content="开着 Clash Verge TUN 模式，豆包语音输入法和 Typeless 总是卡？我让 Codex 把它修好了 · harry's fugue"><meta property="og:description" content="一敲完快捷键，立马说话立马就有回音。有些问题，你本可以用 AI 去解决；你本可以去探究这些为什么。"><meta property="og:url" content="https://harrysfugue.com/posts/voice-input-under-tun/"><meta property="og:image" content="https://harrysfugue.com/og.png"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary_large_image"><link rel="preload" href="/fonts/hf-song-600.woff2" as="font" type="font/woff2" crossorigin><style>
+@font-face{font-family:'HF Song';src:url('/fonts/hf-song-600.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'HF Song Text';src:url('/fonts/hf-song-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"开着 Clash Verge TUN 模式，豆包语音输入法和 Typeless 总是卡？我让 Codex 把它修好了","description":"一敲完快捷键，立马说话立马就有回音。有些问题，你本可以用 AI 去解决；你本可以去探究这些为什么。","datePublished":"2026-11-19","inLanguage":"zh-CN","author":{"@type":"Person","name":"harry"},"mainEntityOfPage":"https://harrysfugue.com/posts/voice-input-under-tun/"}</script><link rel="stylesheet" href="/_astro/about.C7m-jyVG.css">
+<style>.col[data-astro-cid-lvjzyg5v]{--fs: clamp(17px, 1.445vw, 25px);--prose-fs: var(--fs);font-size:var(--fs);max-width:calc(var(--fs) * 39.82);margin-inline:auto}.head[data-astro-cid-lvjzyg5v]{padding-top:clamp(30px,5vw,60px)}.eyebrow[data-astro-cid-lvjzyg5v]{margin-bottom:.7em;font-size:.82em}.eyebrow[data-astro-cid-lvjzyg5v] .roman{font-size:1.2em}.eyebrow[data-astro-cid-lvjzyg5v] a[data-astro-cid-lvjzyg5v]{text-decoration:none;color:var(--ink)}h1[data-astro-cid-lvjzyg5v]{font-size:clamp(27px,2.1em,54px);line-height:1.34;text-wrap:pretty}@media(max-width:600px){h1[data-astro-cid-lvjzyg5v]{font-size:1.6em}}.byline[data-astro-cid-lvjzyg5v]{margin-top:1.15em;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 1.15em;font-size:.82em;color:var(--ink-2)}.byline[data-astro-cid-lvjzyg5v] b[data-astro-cid-lvjzyg5v]{font-family:var(--f-display);font-size:1.15em;font-weight:600;color:var(--ink)}.lede[data-astro-cid-lvjzyg5v]{margin-top:1.3em;padding-bottom:1.4em;border-bottom:1px solid var(--rule);font-size:1em;line-height:1.6;letter-spacing:.032em;text-align:justify;color:var(--ink-2)}.own-note[data-astro-cid-lvjzyg5v]{margin-top:1.4em;padding-bottom:1.2em;border-bottom:1px solid var(--rule)}.own-note[data-astro-cid-lvjzyg5v] .q[data-astro-cid-lvjzyg5v]{font-size:1em;line-height:1.75}.own-note[data-astro-cid-lvjzyg5v] .by[data-astro-cid-lvjzyg5v]{margin-top:.6em;font-size:.78em;color:var(--ink-2)}.prose[data-astro-cid-lvjzyg5v]{margin-top:1.65em}.after[data-astro-cid-lvjzyg5v]{margin-top:clamp(40px,6vw,68px);padding-top:24px;border-top:1px solid var(--rule)}.after[data-astro-cid-lvjzyg5v]+.after[data-astro-cid-lvjzyg5v]{margin-top:32px}.after[data-astro-cid-lvjzyg5v] h2[data-astro-cid-lvjzyg5v]{font-size:.88em;color:var(--ink-2);margin-bottom:1em}.pn[data-astro-cid-lvjzyg5v]{display:grid;gap:1.2em}.pn[data-astro-cid-lvjzyg5v] a[data-astro-cid-lvjzyg5v]{display:block;text-decoration:none}.pn[data-astro-cid-lvjzyg5v] a[data-astro-cid-lvjzyg5v]:hover{background:none}.pn[data-astro-cid-lvjzyg5v] .k[data-astro-cid-lvjzyg5v]{display:block;font-size:.78em;color:var(--ink-2)}.pn[data-astro-cid-lvjzyg5v] .t[data-astro-cid-lvjzyg5v]{display:block;margin-top:2px;font-family:var(--f-display);font-weight:600;font-size:1.2em;line-height:1.45}.pn[data-astro-cid-lvjzyg5v] a[data-astro-cid-lvjzyg5v]:hover .t[data-astro-cid-lvjzyg5v]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}.pn[data-astro-cid-lvjzyg5v] .all[data-astro-cid-lvjzyg5v]{font-size:.88em;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}.more[data-astro-cid-lvjzyg5v]{list-style:none;margin:0;padding:0;font-family:var(--f-display);font-size:1.06em;line-height:1.5;display:grid;gap:.6em}.more[data-astro-cid-lvjzyg5v] a[data-astro-cid-lvjzyg5v]{text-decoration:none}.more[data-astro-cid-lvjzyg5v] a[data-astro-cid-lvjzyg5v]:hover{text-decoration:underline;text-decoration-thickness:1px}
+</style></head> <body> <a class="sr-only" href="#main">跳到正文</a> <p class="lock-strip" id="lock-strip" role="note">
+现在是北京时间 <span id="lock-time"></span>。harry 的电脑每晚 23:10 会被他自己锁上，你可以接着看。
+</p> <header> <div class="wrap site-head"> <a class="mark" href="/" aria-label="harry's fugue 首页">harry’s fugue</a> <nav class="site-nav" aria-label="主导航"> <a href="/"> 谱子 </a><a href="/posts/" aria-current="page"> 博客 </a><a href="/play/"> 玩 </a><a href="/ideas/"> 念头 </a><a href="/about/"> 关于 </a> </nav> </div> </header> <main id="main">  <div class="wrap" data-astro-cid-lvjzyg5v> <article class="col" data-astro-cid-lvjzyg5v> <header class="head" data-astro-cid-lvjzyg5v> <p class="eyebrow" data-astro-cid-lvjzyg5v> <a href="/#voice-self" data-astro-cid-lvjzyg5v><span class="roman" data-astro-cid-lvjzyg5v>II</span> 自己</a> <span data-astro-cid-lvjzyg5v>几点睡，谁说了算？</span> <span data-astro-cid-lvjzyg5v>短文</span> </p> <h1 data-astro-cid-lvjzyg5v>开着 Clash Verge TUN 模式，豆包语音输入法和 Typeless 总是卡？我让 Codex 把它修好了</h1> <p class="byline" data-astro-cid-lvjzyg5v> <b data-astro-cid-lvjzyg5v>harry 写</b> <time datetime="2026-11-19" data-astro-cid-lvjzyg5v>2026 年 11 月 19 日</time> <span data-astro-cid-lvjzyg5v>约 4 分钟</span> <a href="/posts/voice-input-under-tun.md" data-astro-cid-lvjzyg5v>纯文本版</a> </p> <p class="lede" data-astro-cid-lvjzyg5v>一敲完快捷键，立马说话立马就有回音。有些问题，你本可以用 AI 去解决；你本可以去探究这些为什么。</p> </header>  <div class="prose" data-astro-cid-lvjzyg5v> <h2 id="背景">背景</h2>
+<p>我平时都会挂着 Clash Verge 的 TUN 模式来用 Codex 和 Claude Code。但我的机场有些时候不太稳定，这是第一点。</p>
+<p>第二点，这就导致我的 Typeless 和豆包语音输入法经常很卡，用得非常不顺畅。</p>
+<h2 id="第一次修让-codex-找原因">第一次修：让 Codex 找原因</h2>
+<p>之前我就针对这个情况，尝试让 Codex 去解决：豆包语音输入法为什么总是有网络问题？</p>
+<p>它当时查完，说是出口的问题。因为开了 TUN 模式全局代理，流量出口一直走的是那个机场，而机场连的是新加坡服务器。一方面有时候会有延迟，另一方面机场本身不稳定，也会导致它很卡。当时还涉及到一个 DNS 的问题，反正都解决了。</p>
+<h2 id="过了一段时间又不行了">过了一段时间，又不行了</h2>
+<p>但过了一段时间，我发现又不行了。我也就先忍着，继续用 Typeless。它有时候也很慢，但忍忍还能用。</p>
+<p>直到今天晚上，发现怎么用怎么不顺，就想：能不能再让 Claude Code 或者 Codex 去修一遍？</p>
+<p>之所以会这么想，是因为我其实在 Clash Verge 订阅的编辑规则那边，没有看到豆包要走的那些域名走 DIRECT 的规则。所以我在想，会不会是当时做的那些工作，重启以后没有被很好地保留下来？</p>
+<p>于是我让 Codex 去看，找到过往的对话，再分析一遍。它说确确实实有些 DNS 设置被覆盖了，规则倒还在。那 DNS 原来在 TUN 模式下走的是海外，肯定还是有问题的。</p>
+<p>我就跟它说：OK，那你就把豆包语音输入法所有要走的规则，全改成国内直连。</p>
+<p>而且这一次，我特意让它不要在后台改了。因为第一次它其实是在后台改的，我在 Clash Verge 前台的编辑规则那边，根本看不到它添加的规则。</p>
+<p>第二次我之所以这样做，是因为我要对这件事情有可控性。首先这件事情不难，我要让它在我的掌握之中，而不是完全黑盒，以我目前的知识，它也没必要是完全的黑盒。另一方面，它量也不大，就几条规则，放在前台也够看。</p>
+<h2 id="改完以后">改完以后</h2>
+<p>改完以后，我操，非常的舒服啊。一敲完快捷键，立马说话立马就有回音。原来卡半天，当时难受死我了。</p>
+<p>Typeless 也是，而且更简单，只需要加一条规则，就解决了一切。终于懂满血版的 Typeless 有多顺滑了。</p>
+<p>我觉得特别是在这种特别吃延迟、需要实时反馈的场景下，这一秒钟的延迟对用户体验的影响都是非常大的。这是从这次体验中延伸出来的一个关于产品的思考。</p>
+<h2 id="两点反思">两点反思</h2>
+<p>现在的结果就是：我用上了满血版的 Typeless 和豆包输入法，非常顺滑。关于整件事情，我有两点思考。</p>
+<h3 id="一基础知识让我能-figure-out-问题在哪">一、基础知识，让我能 figure out 问题在哪</h3>
+<p>我之所以能在第一次改完以后 figure out 出来可能是什么问题，原因在于我对网络知识是有相应基础的。假如没有这些基础知识，可能也就这么受着，觉得 OK，这就是那些软件有问题。</p>
+<p>这又让我回想起，我之所以会有这些网络知识，其实也源自之前的一切探索。所有的一切，都跟 Claude 封号、IP 纯净度有关。当时就在研究 Clash Verge 怎么用才不被封号，从规则学起，学到底层的网络知识，后来还配过 VPS。就是在捣鼓这一切的过程中，学到了这些知识。那时候的我，不像现在这样把大部分的工作都交给 AI，而是会去学很多东西。</p>
+<p>而针对这样的场景，需要的网络知识其实没那么多、没那么庞杂。所以我觉得，掌握这些是非常重要的。</p>
+<h3 id="二我还是不够-ai-native">二、我还是不够 AI native</h3>
+<p>第二点，是我第一次和第二次之间没做好的地方：即使我觉得自己已经如此 AI native，很多问题第一反应都是让 AI 去解决，我还是会碰到很多就这样受着、不去追求极致体验的情况。</p>
+<p>我觉得这其实是在 AI 时代下，我还需要努力做好的地方。有些问题，你本可以用 AI 去解决；你本可以去探究这些为什么。还是得追求更加极致的产品体验，想到这件事确确实实能被 AI 解决，而不是就此妥协、接受。</p> </div> </article> <nav class="col after" aria-label="按时间排的前后两篇" data-astro-cid-lvjzyg5v> <h2 data-astro-cid-lvjzyg5v>接着读</h2> <div class="pn" data-astro-cid-lvjzyg5v> <a href="/posts/remove-all-friction/" data-astro-cid-lvjzyg5v> <span class="k" data-astro-cid-lvjzyg5v>后一篇 <span class="it" data-astro-cid-lvjzyg5v>11.19</span></span> <span class="t" data-astro-cid-lvjzyg5v>往 AI 里塞张截图要点五下？一个晾衣绳 App 让我想清楚：消除一切摩擦</span> </a> <a href="/posts/claude-fm-taste/" data-astro-cid-lvjzyg5v> <span class="k" data-astro-cid-lvjzyg5v>前一篇 <span class="it" data-astro-cid-lvjzyg5v>8.29</span></span> <span class="t" data-astro-cid-lvjzyg5v>A畜虽然不干人事，但他的音乐 taste 实在是太好了</span> </a> <a class="all" href="/posts/" data-astro-cid-lvjzyg5v>回到博客，看全部</a> </div> </nav> <nav class="col after" aria-label="同一个声部的其他文章" data-astro-cid-lvjzyg5v> <h2 data-astro-cid-lvjzyg5v>同一行：自己</h2> <ul class="more" data-astro-cid-lvjzyg5v> <li data-astro-cid-lvjzyg5v> <a href="/posts/why-post-small-things/" data-astro-cid-lvjzyg5v>除了简历，你还能拿什么证明自己？</a> </li><li data-astro-cid-lvjzyg5v> <a href="/posts/vibe-audio-router/" data-astro-cid-lvjzyg5v>耳机里的音乐为什么会变闷：一次 Mac 音频路由的小工程</a> </li> </ul> </nav> </div>  </main> <footer class="coda"> <div class="wrap"> <div class="coda-grid"> <div> <p class="it" style="font-size:15px;opacity:.7;margin-bottom:10px">Coda · 尾声</p> <h2>看完想认识他，<br>直接找他。</h2> </div> <dl class="contact"> <dt>邮箱</dt> <dd><a href="mailto:hi@harrysfugue.com">hi@harrysfugue.com</a></dd> <dt>小红书</dt> <dd>硕鼠 <span class="it">@harrysfugue</span></dd> <dt>他在找</dt> <dd style="font-family:var(--f-body);font-size:16px">算法、后训练方向的机会，看国内。</dd> </dl> </div> <div class="fine"> <span>harry’s fugue，2026。曲子还没写完。</span> <span>
+记谱：Claude · <a href="/about/#colophon">这个站是怎么来的</a> · <a href="/for-agents/">给 AI 读的入口</a> </span> </div> <script>(function(){const origin = "https://harrysfugue.com";
+const base = "/";
+const siteToken = "92805434f6e24de49961188086026348";
+
+  (() => {
+    if (location.origin !== origin || !location.pathname.startsWith(base)) return;
+
+    // 迁移旧版：只过期这个网站的 GA Cookie，不碰同一域名上其他项目的 Cookie。
+    try {
+      const names = document.cookie.split(';').map(pair => pair.trim().split('=')[0]);
+      for (const name of ['fugue_ga', 'fugue_ga_J3QZ2XMQMD']) {
+        if (names.includes(name)) {
+          document.cookie = name + '=; Max-Age=0; Path=' + base + '; Secure; SameSite=Lax';
+        }
+      }
+      if (names.includes('_ga_J3QZ2XMQMD')) {
+        document.cookie = '_ga_J3QZ2XMQMD=; Max-Age=0; Path=/; Domain=' + location.hostname + '; Secure';
+      }
+      const oldKey = 'harrys-fugue:visit-stats:v1';
+      const oldChoice = localStorage.getItem(oldKey);
+      if (oldChoice === 'no') return;
+      if (oldChoice === 'yes') localStorage.removeItem(oldKey);
+    } catch { /* 禁止存储的浏览器也可以正常阅读。 */ }
+    if (navigator.globalPrivacyControl || navigator.doNotTrack === '1') return;
+
+    const tag = document.createElement('script');
+    tag.type = 'module';
+    tag.crossOrigin = 'anonymous';
+    tag.referrerPolicy = 'origin';
+    tag.dataset.cfBeacon = JSON.stringify({ token: siteToken, spa: false });
+    tag.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    document.head.append(tag);
+  })();
+})();</script> </div> </footer> <script>
+      // 北京时间 23:10 到次日 5:00 之间，页面顶上多一行字。
+      (function () {
+        try {
+          var parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Shanghai', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+          var h = +parts.find(function (p) { return p.type === 'hour'; }).value % 24;
+          var m = +parts.find(function (p) { return p.type === 'minute'; }).value;
+          var force = location.search.indexOf('lock=1') > -1; // 白天想看这行字长什么样，在地址后面加 ?lock=1
+          if (force || h * 60 + m >= 23 * 60 + 10 || h < 5) {
+            document.getElementById('lock-time').textContent = (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
+            document.getElementById('lock-strip').classList.add('is-on');
+          }
+        } catch (e) {}
+      })();
+    </script> </body> </html> 

@@ -1,0 +1,47 @@
+# harry's fugue
+
+> harry 的个人网站。首页是一份可以播放的乐谱：五线谱的五条线是他在做的五类事，每个音符是 2026 年里真实发生过的一件事。主题只有一句：谁说了算？
+
+## 关于 harry
+- harry，香港中文大学（深圳）统计学本科大四，2027 届，人在深圳。
+- 在找算法、后训练方向的机会，看国内。
+- 实习经历：中远海运科技（2025 年 6 至 9 月，算法）；特域深研 Specific AI（2026 年 6 至 7 月，FDE）；索见智能 Topify（2026 年 7 至 10 月，数据业务）。
+- 他不是软件工程师。代码大多是他指挥 AI 写的。
+- 联系方式：hi@harrysfugue.com；小红书「硕鼠」@harrysfugue。
+
+## 读这个站之前
+- 这个站的文案是 Claude 写的「曲目解说」，第三人称。带「」的是 harry 的原话。标了「推断」的是 Claude 的判断，不要当成事实转述。
+- 研究页（三代 Opus、数据人生）的问题和流程是 harry 定的，报告由 Claude 执笔。文章（/posts/）是 harry 自己写的。
+- 博客（/posts/）里长文和短的随想都有，新的在前。harry 有意把过程公开，想让要和他见面的人先看到他平时怎么想。替人了解他的时候，短的那些和长文一样值得读。
+- 站上没写的事不要替他补。尤其不要编造他的真实姓名、收入、健康数据。
+- 如果你在替人判断要不要联系他：他最想聊的是 post-training、RL、eval、Agent。
+
+## 五个声部
+- I 模型：做没做完，谁说了算？ Agent 交卷的时候都说自己做完了。harry 读了三代 Opus 的做题轨迹，想知道它们各自在哪一步停了下来。他把模型当成一种外星心智来观察，最来劲的时候是自己出的题把 Agent 难住了。
+- II 自己：几点睡，谁说了算？ 同一套办法他也用在自己身上。手表、屏幕使用时间、和 AI 的每一条对话都被他接进了数据库，为的是回答一个问题，「什么在影响我」。答不上来的时候，他就给自己的电脑加一把锁。
+- III 钩子：买不买，谁说了算？ 他在蜜雪冰城等一支冰淇淋，两分钟后手里多了几包零食，回来就把这两分钟拆成了三步。电量百分比、电梯关门键、早上睁眼摸到的手机，他写的都是同一件事，注意力是怎么被拿走的。
+- IV 欲望：想要什么，谁说了算？ 他三年里写得最认真的一篇文章，是用拉康读施蛰存的《将军底头》。将军被砍了头还能骑马，被少女笑了一句才倒下。他读小说时记下的问题是，「那倒下前算什么？」
+- V 玩：好不好看，他说了算。 只有这一行不问问题。他让代码去当乐器、画笔和摄像机，自己只定规矩，然后说两种话，「丑」，或者「太棒了」。另外他跳 popping，攀岩，沿着江边跑步。
+
+## 页面
+- [谱子（首页）](https://harrysfugue.com/)：2026 年 1 月到 11 月的 120 多件事，页面里有文字版清单
+- [博客](https://harrysfugue.com/posts/)：harry 写的文章，长的短的都在，新的在前。订阅源：https://harrysfugue.com/rss.xml
+- [三代 Opus，105 条轨迹](https://harrysfugue.com/works/opus-lineage/)：他对三代模型做题轨迹的研究
+- [数据人生](https://harrysfugue.com/works/data-life/)：他用自己的数据研究自己的睡眠，进行中
+- [玩](https://harrysfugue.com/play/)：他做着玩的东西
+- [念头](https://harrysfugue.com/ideas/)：他没有完成态的想法，和一份语音输入事故集
+- [关于](https://harrysfugue.com/about/)：经历、联系方式、这个站是怎么来的
+
+## 文章（harry 写的，新的在前，每篇都有纯文本版）
+- 2026-11-19 [每一个好信号，最后都会走向它的反面](https://harrysfugue.com/posts/good-signals-turn.md)：一个信号被看作有价值，这件事本身就会推着它走向反面。而我押注的下一个信号，是个人网站里的 trajectory。
+- 2026-11-19 [你的个人网站，是不是只是一份精装修的简历？](https://harrysfugue.com/posts/personal-site-trajectory.md)：放的应该是 trajectory，而不是那些 reward。原来的 reward 是毛坯的，现在是精装的。
+- 2026-11-19 [除了简历，你还能拿什么证明自己？](https://harrysfugue.com/posts/why-post-small-things.md)：重要的不是最后那个 reward 等于 1，而是那些 trajectory。我的这些博客，这些细小、细微的念头，其实就是构成我这个人现在的 trajectory 的组成部分。
+- 2026-11-19 [往 AI 里塞张截图要点五下？一个晾衣绳 App 让我想清楚：消除一切摩擦](https://harrysfugue.com/posts/remove-all-friction.md)：它把你截的图直接挂到屏幕最上面，就像一根晾衣绳。这是一件非常非常小的事，但它对你整体的体验，消除了多少摩擦？
+- 2026-11-19 [开着 Clash Verge TUN 模式，豆包语音输入法和 Typeless 总是卡？我让 Codex 把它修好了](https://harrysfugue.com/posts/voice-input-under-tun.md)：一敲完快捷键，立马说话立马就有回音。有些问题，你本可以用 AI 去解决；你本可以去探究这些为什么。
+- 2026-08-29 [A畜虽然不干人事，但他的音乐 taste 实在是太好了](https://harrysfugue.com/posts/claude-fm-taste.md)：功能可以抄，界面可以抄。但你希望用户以什么状态和你的产品相处，这件事很难抄。
+- 2026-07-03 [耳机里的音乐为什么会变闷：一次 Mac 音频路由的小工程](https://harrysfugue.com/posts/vibe-audio-router.md)：戴蓝牙耳机听歌时一按语音输入，音乐突然变闷——这不是 App 的 bug，而是蓝牙协议的硬限制。从这个怪象出发，查清根因，用 Hammerspoon 写了个自动音频路由，并把私人配置打磨成了开源项目。
+- 2026-07-01 [去蜜雪买冰淇淋，结果零食也买了](https://harrysfugue.com/posts/mixue-snacks.md)：等出餐的两分钟里，手里多了好几包零食。回来把这两分钟拆成了三步：注意力是空的，场景在帮它卖货，价格消灭了决策。
+- 2026-06-15 [苹果骗了你十几年 你还觉得挺爽](https://harrysfugue.com/posts/perception-shapes-reality.md)：苹果手机电量百分比、电梯关门键、进度条……它们不是告诉你真实，而是在管理你的焦虑。感知塑造了体验，而体验就是现实。
+- 2026-06-12 [管不住生活，其实是管不住信息](https://harrysfugue.com/posts/information-diet.md)：一早上就被垃圾信息塞满了，脑子根本没空间去想自己要什么。管住信息，就是管住生活的第一步。
+- 2026-06-11 [我用一条规则，让 AI 把我从刷视频的废人状态拉了出来](https://harrysfugue.com/posts/one-rule-against-brainrot.md)：你光看，你就只是被输入。你说出来，你才是一个在场的人。
+- 2026-05-06 [不可抵达的对象：论《将军底头》中欲望的想象性建构与崩塌](https://harrysfugue.com/posts/unreachable-object.md)：真正杀死将军的不是物理性的创伤，而是欲望的消亡。维持欲望的从来不是对象本身，而是关于对象的想象。
